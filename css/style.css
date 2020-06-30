@@ -17,7 +17,14 @@ body {
     border-radius: 10px;
 }
 
-.shopping-list>li {
+.shopping-list {
     margin-top: 10px;
+}
+
+.shopping-list>li {
     list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    margin-top: 5px;
 }
