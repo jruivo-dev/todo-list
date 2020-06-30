@@ -23,11 +23,24 @@ function updateItems() {
 				<button>X</button>
 		</li>`
   }).join("");
-  console.log(html);
   list.innerHTML = html;
 }
 
+function saveToLocalStorage() {
+  localStorage.setItem('items', JSON.stringify(items));
+}
+
+function importFromLocalStorage() {
+  lsItems = JSON.parse(localStorage.getItem('items'));
+  if (lsItems) {
+    items.push(...lsItems);
+  }
+  list.dispatchEvent(new CustomEvent('itemsUpdated'));
+}
 
 shoppingForm.addEventListener('submit', addItem)
 
 list.addEventListener('itemsUpdated', updateItems);
+list.addEventListener('itemsUpdated', saveToLocalStorage);
+
+importFromLocalStorage();
