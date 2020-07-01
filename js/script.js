@@ -18,7 +18,8 @@ function addItem(e) {
 function updateItems() {
   const html = items.map((item) => {
     return `<li>
-				<input type="checkbox"/>
+				<input type="checkbox" value=${item.id}
+				 ${item.checked ? "checked" : ""}>
 				<span>${item.item}</span>
 				<button value=${item.id}>X</button>
 		</li>`
@@ -39,21 +40,35 @@ function importFromLocalStorage() {
 }
 
 
-function handleDelete(e) {
+function handleListOperations(e) {
   if (e.target.matches('button')) {
     const buttonId = parseFloat(e.target.value);
     items = items.filter(item => {
       return item.id !== buttonId;
     });
   }
+
+  if (e.target.matches('input[type=checkbox]')) {
+    console.log(e.target.value);
+    const checkId = parseFloat(e.target.value);
+
+    const itemChecked = items.find(item => item.id === checkId);
+    itemChecked.checked = !itemChecked.checked;
+    console.log(itemChecked);
+  }
+
   list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
 
-list.addEventListener('click', handleDelete);
+
+
+list.addEventListener('click', handleListOperations);
 shoppingForm.addEventListener('submit', addItem);
 
 list.addEventListener('itemsUpdated', updateItems);
 list.addEventListener('itemsUpdated', saveToLocalStorage);
 
 importFromLocalStorage();
+
+item1 = items[1];
