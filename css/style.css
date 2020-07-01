@@ -10,6 +10,13 @@ body {
     justify-items: center;
 }
 
+h1 {
+    margin-top: 20px;
+    color: white;
+    font-size: 45px;
+    font-weight: normal;
+}
+
 .wrapper {
     background: white;
     margin-top: 20px;
