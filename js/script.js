@@ -20,7 +20,7 @@ function updateItems() {
     return `<li>
 				<input type="checkbox"/>
 				<span>${item.item}</span>
-				<button>X</button>
+				<button value=${item.id}>X</button>
 		</li>`
   }).join("");
   list.innerHTML = html;
@@ -38,7 +38,20 @@ function importFromLocalStorage() {
   list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
-shoppingForm.addEventListener('submit', addItem)
+
+function handleDelete(e) {
+  if (e.target.matches('button')) {
+    const buttonId = parseFloat(e.target.value);
+    items = items.filter(item => {
+      return item.id !== buttonId;
+    });
+  }
+  list.dispatchEvent(new CustomEvent('itemsUpdated'));
+}
+
+
+list.addEventListener('click', handleDelete);
+shoppingForm.addEventListener('submit', addItem);
 
 list.addEventListener('itemsUpdated', updateItems);
 list.addEventListener('itemsUpdated', saveToLocalStorage);
